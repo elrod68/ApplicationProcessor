@@ -30,4 +30,13 @@ namespace ULaw.ApplicationProcessor.Enums
         English
     }
 
+    public enum ApplicationResult : int
+    {
+        [DescriptionAttribute("Being Processed")]
+        Processing,
+        [DescriptionAttribute("Accepted")]
+        Accepted,
+        [DescriptionAttribute("Rejected")]
+        Rejected
+    }
 }

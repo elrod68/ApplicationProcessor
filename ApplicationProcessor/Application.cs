@@ -32,6 +32,20 @@ namespace ULaw.ApplicationProcessor
         public DegreeGradeEnum DegreeGrade { get; set; }
         public DegreeSubjectEnum DegreeSubject { get; set; }
 
+        //decide on application status
+        public ApplicationResult AppResult()
+        {
+            if (DegreeGrade == DegreeGradeEnum.twoTwo) return ApplicationResult.Processing;
+            else
+            {
+                if (DegreeGrade == DegreeGradeEnum.third) return ApplicationResult.Rejected;
+                else
+                {
+                    if (DegreeSubject == DegreeSubjectEnum.law || DegreeSubject == DegreeSubjectEnum.lawAndBusiness) return ApplicationResult.Accepted;
+                    else return ApplicationResult.Processing;
+                }
+            }
+        }
         public string Process()
         {
             var result = new StringBuilder(HTMLBodyStart());
