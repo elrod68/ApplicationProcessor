@@ -67,7 +67,7 @@ namespace ULaw.ApplicationProcessor
             try
             {
                 //check if properties are correctly set
-                if (!IsValid()) return "Missing data - not initialized properly.";
+                if (!IsValid()) return MissingData;
 
                 //construct HTML depending on app result
                 var result = new StringBuilder(HTMLBodyStart());
