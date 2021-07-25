@@ -6,6 +6,8 @@ namespace ULaw.ApplicationProcessor
 {
     public class Application
     {
+        const string MissingData= "Missing data - not initialized properly.";
+
         public Application(string faculty, string CourseCode, DateTime Startdate, string Title, string FirstName, string LastName, DateTime DateOfBirth, bool requiresVisa)
         {
             this.ApplicationId = new Guid();
@@ -46,38 +48,56 @@ namespace ULaw.ApplicationProcessor
                 }
             }
         }
+
+        //is data provided empty - obviously could expand further to check dates for validity, first and last name for min length
+        public Boolean IsValid()
+        {
+            if ((String.IsNullOrEmpty(Faculty)) || (String.IsNullOrEmpty(CourseCode)) ||
+               (String.IsNullOrEmpty(Title)) || (String.IsNullOrEmpty(FirstName)) ||
+               (String.IsNullOrEmpty(LastName)) ||
+               (StartDate == DateTime.MinValue) || (DateOfBirth == DateTime.MinValue))
+                return false;
+
+            return true;
+        }
+
+        //return HTML string based on application result
         public string Process()
         {
-            var result = new StringBuilder(HTMLBodyStart());
-            result.Append(HTMLSalutation());
+            try
+            {
+                //check if properties are correctly set
+                if (!IsValid()) return "Missing data - not initialized properly.";
 
-            if (DegreeGrade == DegreeGradeEnum.twoTwo)
-            {
-                result.Append(HTMLProcessing());
-            }
-            else
-            {
-                if (DegreeGrade == DegreeGradeEnum.third)
+                //construct HTML depending on app result
+                var result = new StringBuilder(HTMLBodyStart());
+                result.Append(HTMLSalutation());
+
+                switch (AppResult())
                 {
-                    result.Append(HTMLApplicationRejected());
-                }
-                else
-                {
-                    if (DegreeSubject == DegreeSubjectEnum.law || DegreeSubject == DegreeSubjectEnum.lawAndBusiness)
-                    {
-                        result.Append(HTMLApplicationAccepted());
-                    }
-                    else
-                    {
+                    case ApplicationResult.Processing:
                         result.Append(HTMLProcessing());
-                    }
+                        break;
+                    case ApplicationResult.Accepted:
+                        result.Append(HTMLApplicationAccepted());
+                        break;
+                    case ApplicationResult.Rejected:
+                        result.Append(HTMLApplicationRejected());
+                        break;
+                    default:
+                        break;
                 }
+
+                result.Append(HTMLYours());
+                result.Append(HTMLBodyEnd());
+
+                return result.ToString();
             }
-
-            result.Append(HTMLYours());
-            result.Append(HTMLBodyEnd());
-
-            return result.ToString();
+            catch (Exception ex)
+            {
+                //need to add proper error logging and handling, for example NLog 
+                return ex.Message;
+            }
         }
 
         //HTML we are processing
