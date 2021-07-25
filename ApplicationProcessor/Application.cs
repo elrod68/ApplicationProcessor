@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Text;
+using Ulaw.ApplicationProcessor;
 using ULaw.ApplicationProcessor.Enums;  
 
 namespace ULaw.ApplicationProcessor
 {
-    public class Application
+    public class Application:IApplication
     {
         const string MissingData= "Missing data - not initialized properly.";
 
