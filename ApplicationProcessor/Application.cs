@@ -101,6 +101,12 @@ namespace ULaw.ApplicationProcessor
             }
         }
 
+        //all 3 major templates shown below for processing, accepted, rejected could be replaced with a simple template processing module, which will include field markup to replace with application values.
+        //Those could be kept in xml files or database table, because changing code in order to change a contact email or phrase is not optimal
+        //Also generally speaking, a general HTML template engine should be as domain agnostic as possible. 
+        //A simple choice could be a very simple templating function, which could take any object as input (Application or whatever) and perform a very simple search and replace for all object values marked with {XXX}
+        //A simplistic example is shown in Template.cs
+
         //HTML we are processing
         public string HTMLProcessing()
         {
