@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Ulaw.ApplicationProcessor;
 using ULaw.ApplicationProcessor;
 using ULaw.ApplicationProcessor.Enums;
 
@@ -24,6 +25,8 @@ namespace ULaw.ApplicationProcessor.Tests
         public void ApplicationSubmissionWithFirstLawDegree()
         {
             Application thisSubmission = new Application("Law", "ABC123", new DateTime(2019, 9, 22), "Mr", "Test", "Tester", new DateTime(1991, 08, 14), false);
+
+            //DIApplication test = new DIApplication(thisSubmission);
 
             thisSubmission.DegreeGrade = DegreeGradeEnum.first;
             thisSubmission.DegreeSubject = DegreeSubjectEnum.law;
@@ -133,7 +136,10 @@ namespace ULaw.ApplicationProcessor.Tests
         [TestMethod]
         public void ApplicationSubmissionWithMissingData()
         {
-            Application thisSubmission = new Application("Law", "", new DateTime(2019, 9, 22), "Mr", "Test", "Tester", new DateTime(1991, 08, 14), false);
+            
+            ApplicationMath thisSubmission = new ApplicationMath("Law", "", new DateTime(2019, 9, 22), "Mr", "Test", "Tester", new DateTime(1991, 08, 14), false);
+
+            //DIApplication test = new DIApplication(thisSubmission);
 
             thisSubmission.DegreeGrade = DegreeGradeEnum.third;
             thisSubmission.DegreeSubject = DegreeSubjectEnum.maths;
