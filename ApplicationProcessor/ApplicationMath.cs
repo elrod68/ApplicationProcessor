@@ -51,6 +51,7 @@ namespace ULaw.ApplicationProcessor
         }
 
         //is data provided empty - obviously could expand further to check dates for validity, first and last name for min length
+        //additional comments
         public Boolean IsValid()
         {
             if ((String.IsNullOrEmpty(Faculty)) || (String.IsNullOrEmpty(CourseCode)) ||
